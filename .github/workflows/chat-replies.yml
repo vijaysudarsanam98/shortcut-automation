@@ -1,0 +1,42 @@
+name: Answer emailed questions
+
+on:
+  # Turned off: answering emails needs inbox access (Gmail/Outlook), which Brevo doesn't provide.
+  # To turn on, add back:  schedule: [{ cron: '*/15 3-14 * * 1-5' }]
+  workflow_dispatch:
+
+concurrency:
+  group: chat-replies
+  cancel-in-progress: false
+
+jobs:
+  answer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run chat
+        env:
+          SHORTCUT_API_TOKEN: ${{ secrets.SHORTCUT_API_TOKEN }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          REPORT_RECIPIENTS: ${{ secrets.REPORT_RECIPIENTS }}
+          CHAT_ALLOWED_SENDERS: ${{ secrets.CHAT_ALLOWED_SENDERS }}
+          EMAIL_PROVIDER: ${{ vars.EMAIL_PROVIDER }}
+          EMAIL_FROM_NAME: ${{ vars.EMAIL_FROM_NAME }}
+          REPORT_SUBJECT: ${{ vars.REPORT_SUBJECT }}
+          CUSTOMER_LABELS: ${{ vars.CUSTOMER_LABELS }}
+          CUSTOMER_PRIORITY_VALUES: ${{ vars.CUSTOMER_PRIORITY_VALUES }}
+          CUSTOMER_STORY_TYPES: ${{ vars.CUSTOMER_STORY_TYPES }}
+          CUSTOMER_TEAMS: ${{ vars.CUSTOMER_TEAMS }}
+          CUSTOMER_STATES: ${{ vars.CUSTOMER_STATES }}
+          ITERATION_TEAM: ${{ vars.ITERATION_TEAM }}
+          FLAG_STALE_DAYS: ${{ vars.FLAG_STALE_DAYS }}
+          DONE_STATES: ${{ vars.DONE_STATES }}
+          MERGED_OK_STATES: ${{ vars.MERGED_OK_STATES }}
+          CHAT_ADDRESS: ${{ vars.CHAT_ADDRESS }}

@@ -1,0 +1,33 @@
+{
+  "name": "shortcut-automation",
+  "version": "1.0.0",
+  "description": "Daily Shortcut team report by email, plus an email assistant that answers ticket questions.",
+  "homepage": "https://github.com/vijaysudarsanam98/shortcut-automation#readme",
+  "bugs": {
+    "url": "https://github.com/vijaysudarsanam98/shortcut-automation/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vijaysudarsanam98/shortcut-automation.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "report": "node src/report.js",
+    "report:dry": "node src/report.js --dry-run",
+    "list-config": "node src/list-config.js",
+    "chat": "node src/chat.js",
+    "chat:watch": "node src/chat.js --watch",
+    "ask": "node src/ask.js"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.9",
+    "imapflow": "^2.9.1",
+    "mailparser": "^3.12.4",
+    "nodemailer": "^10.2.1"
+  }
+}
